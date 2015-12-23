@@ -1,9 +1,6 @@
-import java.io.*;
-import java.net.*;
-import java.util.Scanner;
 
 public class Main {
-	static void runServer(){
+	/*static void runServer(){
 		System.out.println("Server is running");
 		try (ServerSocket server = new ServerSocket(1025);){
 			while (true){
@@ -42,12 +39,12 @@ public class Main {
 				System.out.println(e);
 			}
 		}
-	}
+	}*/
 	public static void main(String[] args) {
-		if (args.length == 0)
-			runClient();
-		else
-			runServer();
+		//if (args.length == 0)
+		//	runClient();
+		//else
+		//	runServer();
 	}
 
 }
