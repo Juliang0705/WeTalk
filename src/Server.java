@@ -8,15 +8,11 @@ public class Server implements Runnable {
 	private List<Socket> clientList;
 	private Hashtable<String,ChatRoom> chatRooms;
 	
-	Server(int port) {
-		try {
+	Server(int port) throws IOException{
 			this.server = new ServerSocket(port); 
 			this.clientList = new LinkedList<>();
 			this.chatRooms = new Hashtable<>();
 			this.runningFlag = true;
-		} catch (Exception e) {
-			System.out.println(e);
-		}
 	}
 	
 	private void handleClient(Socket client){
@@ -68,8 +64,9 @@ public class Server implements Runnable {
 		room.addUser(creator);
 		room.sendMessage("Welcome to " + room.getRoomName() + " Room","SERVER");
 	}
-	private void sendMessage(String roomName,String content,String sender){
+	private void sendMessage(String roomName,String content,String sender) throws Exception{
 		ChatRoom room = this.chatRooms.get(roomName);
+		if (room == null) throw new Exception("Wrong chat room name");
 		room.sendMessage(content, sender);
 	}
 	private void enterChatRoom(String roomName,Socket client){
@@ -109,6 +106,9 @@ public class Server implements Runnable {
 		try {
 			this.runningFlag = false;
 			this.server.close();
+			for (Socket client : this.clientList){
+				try { client.close();} catch (IOException e) {}
+			}
 		} catch (IOException e) {
 			System.out.println(e);
 		}

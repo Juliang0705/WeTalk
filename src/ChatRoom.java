@@ -12,6 +12,7 @@ public class ChatRoom {
 		this.usersList = new LinkedList<Socket>();
 	}
 	void addUser(Socket user){
+		if (this.usersList.contains(user)) return;
 		this.usersList.add(user);
 	}
 	void removeUser(Socket user){
