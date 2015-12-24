@@ -22,7 +22,7 @@ public class Server implements Runnable {
 				try {
 					ObjectInputStream requestFromClient = new ObjectInputStream(client.getInputStream());
 					while (true){
-						Message request = (Message)requestFromClient.readObject();
+						Message request = (Message) requestFromClient.readObject();
 						switch (request.getType()){
 						case NewTopic:
 							createChatRoom(request.getMessage(),client);
@@ -47,7 +47,7 @@ public class Server implements Runnable {
 				} catch (ClassNotFoundException | IOException | InterruptedException e) {
 					System.out.println(e);
 				}catch(Exception e){
-					System.out.println(e);
+					System.out.println("Error here: " + e);
 				}finally{
 					clientList.remove(client);
 					try { client.close();} catch (IOException e) {}
@@ -65,6 +65,7 @@ public class Server implements Runnable {
 		room.sendMessage("Welcome to " + room.getRoomName() + " Room","SERVER");
 	}
 	private void sendMessage(String roomName,String content,String sender) throws Exception{
+		System.out.println("Send to room "+ roomName);
 		ChatRoom room = this.chatRooms.get(roomName);
 		if (room == null) throw new Exception("Wrong chat room name to send");
 		room.sendMessage(content, sender);
@@ -97,6 +98,7 @@ public class Server implements Runnable {
 		try {
 			while (this.runningFlag){
 				Socket client = this.server.accept();
+				System.out.println("Get a client");
 				this.handleClient(client);
 			}
 		} catch (Exception e) {

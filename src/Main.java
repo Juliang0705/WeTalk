@@ -33,6 +33,7 @@ public class Main {
 		try {
 			client = new Client(InetAddress.getLocalHost(),1026);
 			Thread clientThread = new Thread(client);
+			System.out.println("Before Thread starts");
 			clientThread.start();
 			System.out.println("Client is running");
 Outer:		while (true){
@@ -45,6 +46,7 @@ Outer:		while (true){
 									 + "5) Get all chat rooms currently in\n"
 									 + "6) Send message to a chat room\n"
 									 + "7) Quit the app");
+					System.out.print("Enter command: ");
 					int choice = keyboard.nextInt();
 					keyboard.nextLine(); // consume new line character
 					String roomName = "";
@@ -69,15 +71,17 @@ Outer:		while (true){
 						break;
 					case 5:
 						String[] allEnteredRooms = client.getEnteredChatRooms();
-						System.out.println(allEnteredRooms);
+						for (String s: allEnteredRooms)
+							System.out.println(s);
 						break;
 					case 6:
 						System.out.print("Enter the room name: ");
 						roomName = keyboard.nextLine();
-						System.out.println("Enter your name: ");
+						System.out.print("Enter your name: ");
 						String sender = keyboard.nextLine();
 						System.out.print("Enter content: ");
 						String content = keyboard.nextLine();
+						System.out.println("Roomname is "+ roomName);
 						client.sendMessage(roomName, sender, content);
 						break;
 					case 7:
@@ -106,6 +110,10 @@ Outer:		while (true){
 		else{
 			runClient();
 		}
+		/*Scanner keyboard = new Scanner(System.in);
+		String s = keyboard.nextLine();
+		String s2 = keyboard.nextLine();
+		System.out.println(s);
+		System.out.println(s2);*/
 	}
-
 }

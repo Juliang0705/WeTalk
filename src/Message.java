@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 enum MessageType{
 	//used by client
 	NewTopic,	//create new chat room
@@ -9,7 +11,7 @@ enum MessageType{
 	normal, // normal Message
 	SendTopic // send all the topics
 }
-public class Message {
+public class Message implements Serializable{
 	private MessageType type;
 	private String message;
 	private String sender;
@@ -19,12 +21,14 @@ public class Message {
 		this.message = m;
 		this.destination = d;
 		this.sender = s;
+		if (this.destination == null)
+			System.out.println("Destination is null");
 	}
 	public final MessageType getType(){
 		return this.type;
 	}
 	public final String getMessage() throws Exception{
-		if (this.message == null) throw new Exception("destination not available");
+		if (this.message == null) throw new Exception("Message not available");
 		return this.message;
 	}
 	public final String getDestination() throws Exception{
