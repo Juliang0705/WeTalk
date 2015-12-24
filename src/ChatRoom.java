@@ -29,6 +29,7 @@ public class ChatRoom {
 			try {
 				ObjectOutputStream responseToClient = new ObjectOutputStream(user.getOutputStream());
 				responseToClient.writeObject(new Message(MessageType.normal,message,sender,this.roomName));
+				responseToClient.flush();
 			} catch (IOException e) {
 				this.removeUser(user); // no connection 
 			}

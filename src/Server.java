@@ -66,15 +66,17 @@ public class Server implements Runnable {
 	}
 	private void sendMessage(String roomName,String content,String sender) throws Exception{
 		ChatRoom room = this.chatRooms.get(roomName);
-		if (room == null) throw new Exception("Wrong chat room name");
+		if (room == null) throw new Exception("Wrong chat room name to send");
 		room.sendMessage(content, sender);
 	}
-	private void enterChatRoom(String roomName,Socket client){
+	private void enterChatRoom(String roomName,Socket client) throws Exception{
 		ChatRoom room = this.chatRooms.get(roomName);
+		if (room == null) throw new Exception("Wrong chat room name to join");
 		room.addUser(client);
 	}
-	private void quitChatRoom(String roomName,Socket client){
+	private void quitChatRoom(String roomName,Socket client) throws Exception{
 		ChatRoom room = this.chatRooms.get(roomName);
+		if (room == null) throw new Exception("Wrong chat room name to exit");
 		room.removeUser(client);
 		if (room.getNumberOfUsers() == 0)
 			this.chatRooms.remove(room.getRoomName());
@@ -88,6 +90,7 @@ public class Server implements Runnable {
 				result += (topic + ";");
 			}
 			responseToClient.writeObject(new Message(MessageType.SendTopic,result,null,null));
+			responseToClient.flush();
 	}
 	@Override
 	public void run() {

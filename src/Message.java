@@ -14,24 +14,24 @@ public class Message {
 	private String message;
 	private String sender;
 	private String destination;
-	Message(MessageType t, String m,String s,String d){
+	public Message(MessageType t, String m,String s,String d){
 		this.type = t;
 		this.message = m;
 		this.destination = d;
 		this.sender = s;
 	}
-	final MessageType getType(){
+	public final MessageType getType(){
 		return this.type;
 	}
-	final String getMessage() throws Exception{
+	public final String getMessage() throws Exception{
 		if (this.message == null) throw new Exception("destination not available");
 		return this.message;
 	}
-	final String getDestination() throws Exception{
+	public final String getDestination() throws Exception{
 		if (this.destination == null) throw new Exception("destination not available");
 		return this.destination;
 	}
-	final String getSender() throws Exception{
+	public final String getSender() throws Exception{
 		if (this.destination == null) throw new Exception("sender not available");
 		return this.sender;
 	}
